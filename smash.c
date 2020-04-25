@@ -2,8 +2,11 @@
 #define MAXLINE 4096
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "smash.h"
 #include "history.h"
 
@@ -11,6 +14,7 @@
 
 int main(int argc, char const *argv[])
 {
+	setvbuf(stdout,NULL,_IONBF,0); //Disable buffering in the stdout stream
 	
 	init_history();
 	
