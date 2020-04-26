@@ -96,7 +96,7 @@ void executeCommand(char *str) {
 	char * args[1000];
 	char * token;
 	int tokenCount = -1;
-	int argc;
+	// int argc;
 
 	token = strtok(str, " ");
 	
@@ -107,7 +107,7 @@ void executeCommand(char *str) {
 		token = strtok(NULL, " ");
 	}
 
-	argc = tokenCount + 1;
+	// argc = tokenCount + 1;
 
 
 
