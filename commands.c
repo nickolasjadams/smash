@@ -15,22 +15,23 @@ int executeExternalCommand(char *str);
 // Define the function prototypes implemented in smash.c
 int executeExternalCommand(char *str) {
 
-	char *extArgs = strdup(str);
+	char *extArgsDuplicate = strdup(str);
 
 	char * args[1000] = {0}; // null terminates all unfilled spaces
 	char * token;
 	int tokenCount = -1;
-	int argc;
+	//int argc;
 
-	token = strtok(extArgs, " ");
+	token = strtok(extArgsDuplicate, " ");
 
 	while (token != NULL) {
 		++tokenCount;
 		args[tokenCount] = token;
 		token = strtok(NULL, " ");
 	}
+	free(extArgsDuplicate);
 
-	argc = tokenCount + 1;
+	//argc = tokenCount + 1;
 
 	// now we have a nice args array with the command and args
 
@@ -65,11 +66,9 @@ int executeExternalCommand(char *str) {
 		if (execvp(args[0], args) < 0) {
 			// execvp failed.
 			printf("-smash: %s: command not found\n", args[0]);
-			free(extArgs);
 			exit(127);
 		}
-		free(extArgs);
-		fclose(stdout);
+		// fclose(stdout);
 		exit(0);  //The child exits
 
 	// Did the fork fail?
