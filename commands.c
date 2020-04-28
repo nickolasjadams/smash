@@ -65,8 +65,10 @@ int executeExternalCommand(char *str) {
 		if (execvp(args[0], args) < 0) {
 			// execvp failed.
 			printf("-smash: %s: command not found\n", args[0]);
+			free(extArgs);
 			exit(127);
 		}
+		free(extArgs);
 		fclose(stdout);
 		exit(0);  //The child exits
 
