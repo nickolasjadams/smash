@@ -17,7 +17,7 @@ int executeExternalCommand(char *str) {
 
 	char *extArgs = strdup(str);
 
-	char * args[1000];
+	char * args[1000] = {0}; // null terminates all unfilled spaces
 	char * token;
 	int tokenCount = -1;
 	int argc;
@@ -52,12 +52,11 @@ int executeExternalCommand(char *str) {
 		// for (int i = 0; i < 1000; i++) {
 		// 	args[i] = '\0';
 		// }
-		args[argc-1] = '\0';
+		// args[argc-1] = '\0';
 
 	    int retrievedStatus;     //Child's status from wait()
 	    wait(&retrievedStatus);  //Wait for child to exit
-	    WEXITSTATUS(retrievedStatus); //Isolate exit status bits
-	    return 0;                          //The parent's normal exit
+	    return WEXITSTATUS(retrievedStatus); //Isolate exit status bits                          //The parent's normal exit
 
   	// Am I the child process?
 	} else if (pid == 0) {
@@ -65,8 +64,8 @@ int executeExternalCommand(char *str) {
 		// char *args[] = {"-la", NULL}; 
 		if (execvp(args[0], args) < 0) {
 			// execvp failed.
-			printf("%s is not a recognized command.\n", args[0]);
-			exit(1);
+			printf("-smash: %s: command not found\n", args[0]);
+			exit(127);
 		}
 		fclose(stdout);
 		exit(0);  //The child exits
@@ -189,14 +188,14 @@ void executeCommand(char *str) {
 
 	else {
 
-		executeExternalCommand(extArgs);
+		// executeExternalCommand(extArgs);
 
-		add_history(allArgs, 127);
+		add_history(extArgs, executeExternalCommand(extArgs));
 
 	}
 	
 	free(allArgs);
-	// free(extArgs);
+	free(extArgs);
 
 
 }
