@@ -29,7 +29,6 @@ int executeExternalCommand(char *str) {
 		args[tokenCount] = token;
 		token = strtok(NULL, " ");
 	}
-	free(extArgsDuplicate);
 
 	//argc = tokenCount + 1;
 
@@ -61,14 +60,15 @@ int executeExternalCommand(char *str) {
 
   	// Am I the child process?
 	} else if (pid == 0) {
-		// child processes signal handlers reset to their defaults. You can cancel external commands with ctrl+c
 		// execvp(const char *file, char *const argv[]);
 		// char *args[] = {"-la", NULL}; 
 		if (execvp(args[0], args) < 0) {
 			// execvp failed.
 			printf("-smash: %s: command not found\n", args[0]);
+			free(extArgsDuplicate);
 			exit(127);
 		}
+		free(extArgsDuplicate);
 		// fclose(stdout);
 		exit(0);  //The child exits
 
