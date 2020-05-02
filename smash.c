@@ -9,11 +9,13 @@
 #include <sys/wait.h>
 #include "smash.h"
 #include "history.h"
+#include <signal.h>
 
 
 
 int main(int argc, char const *argv[])
 {
+	signal(SIGINT, SIG_IGN); // don't allow ctrl+c to exit. keeps shell from exiting or logging out user if this were the default shell
 	setvbuf(stdout,NULL,_IONBF,0); //Disable buffering in the stdout stream
 	
 	init_history();

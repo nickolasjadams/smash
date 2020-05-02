@@ -61,6 +61,7 @@ int executeExternalCommand(char *str) {
 
   	// Am I the child process?
 	} else if (pid == 0) {
+		// child processes signal handlers reset to their defaults. You can cancel external commands with ctrl+c
 		// execvp(const char *file, char *const argv[]);
 		// char *args[] = {"-la", NULL}; 
 		if (execvp(args[0], args) < 0) {
