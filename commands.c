@@ -15,12 +15,12 @@ int executeExternalCommand(char *str);
 // Define the function prototypes implemented in smash.c
 int executeExternalCommand(char *str) {
 
-	char *extArgsDuplicate = strdup(str);
+	//char *extArgsDuplicate = strdup(str);
+	char *extArgsDuplicate = str;
 
 	char * args[1000] = {0}; // null terminates all unfilled spaces
 	char * token;
 	int tokenCount = -1;
-	//int argc;
 
 	token = strtok(extArgsDuplicate, " ");
 
@@ -30,13 +30,7 @@ int executeExternalCommand(char *str) {
 		token = strtok(NULL, " ");
 	}
 
-	//argc = tokenCount + 1;
-
 	// now we have a nice args array with the command and args
-
-	// for (int i = 0; i < argc; i++) {
-	// 	printf("%s\n", args[i]);
-	// }
 
 	//Create a new, duplicate process that will execute the code below
 	// fflush(stdout);    //Flush parent's stdout buffer into kernel
@@ -48,20 +42,13 @@ int executeExternalCommand(char *str) {
   	// Am I the parent process?
 	if (pid > 0) {
 
-		// reset the args from the previous command
-		// for (int i = 0; i < 1000; i++) {
-		// 	args[i] = '\0';
-		// }
-		// args[argc-1] = '\0';
-
 	    int retrievedStatus;     //Child's status from wait()
 	    wait(&retrievedStatus);  //Wait for child to exit
 	    return WEXITSTATUS(retrievedStatus); //Isolate exit status bits                          //The parent's normal exit
 
   	// Am I the child process?
 	} else if (pid == 0) {
-		// execvp(const char *file, char *const argv[]);
-		// char *args[] = {"-la", NULL}; 
+		
 		if (execvp(args[0], args) < 0) {
 			// execvp failed.
 			printf("-smash: %s: command not found\n", args[0]);
@@ -97,7 +84,6 @@ void executeCommand(char *str) {
 	char * args[1000];
 	char * token;
 	int tokenCount = -1;
-	// int argc;
 
 	token = strtok(str, " ");
 	
@@ -107,8 +93,6 @@ void executeCommand(char *str) {
 
 		token = strtok(NULL, " ");
 	}
-
-	// argc = tokenCount + 1;
 
 
 
@@ -189,8 +173,6 @@ void executeCommand(char *str) {
 	// else might be external
 
 	else {
-
-		// executeExternalCommand(extArgs);
 
 		add_history(extArgs, executeExternalCommand(extArgs));
 

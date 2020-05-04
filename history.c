@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
-// #include "smash.h"
 #include "history.h"
 
 
@@ -62,17 +61,9 @@ void print_history(int firstSequenceNumber) {
 	
 	for (int i = firstSequenceNumber; i < cmdCount; i++) {
 		if (i < MAXHISTORY) {
-			// print_struct(i);
 			printf("%d [%d] %s\n", cmdArray[i].seqNum, cmdArray[i].exitStatus, cmdArray[i].cmd);
 		}
 	}
 
 }
 
-void print_struct(int index) {
-	if (cmdCount < MAXHISTORY) {
-		printf("!%d [%d] %s\n", index+1, cmdArray[index].exitStatus, cmdArray[index].cmd);
-	} else {
-		printf(".%d [%d] %s\n", index+1, cmdArray[index].exitStatus, cmdArray[index].cmd);
-	}
-}

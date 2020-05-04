@@ -49,7 +49,7 @@ int main(int argc, char const *argv[])
 
 	}
 	
-	//clear_history(); // doesn't do anything yet. No explicit mallocs
+	//clear_history(); // doesn't do anything yet.
 	exit(0);
 	return 0;
 	
